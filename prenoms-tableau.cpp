@@ -230,15 +230,6 @@ int main() {
     vector<int> pren_tab_nb_m = {};
     vector<int> pren_tab_nb_f = {};
     vector<string> sex = colonne(selectLignes(t, 2, choix_pren), 0);
-    /**vector<string> sex_m;
-    vector<string> sex_f;
-     for(int i = 0; i < sex.size(); i++) {
-        if(sex[i] == "M") {
-            sex_m.push_back(sex[i]);
-        } else {
-            sex_f.push_back(sex[i]);
-                }
-    }**/
     for(int i = 0; i < pren_tab_nb.size(); i++) {
         if(sex[i] == "M") {
             pren_tab_nb_m.push_back(pren_tab_nb[i]);
