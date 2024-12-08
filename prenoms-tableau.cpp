@@ -155,11 +155,11 @@ int indiceMax(vector<int> t) {
     if(t.size() == 0) {
         ind_max = -1;
     } else if(t.size() == 1) {
-        ind_max = t[0];
+        ind_max = 0;
     } else {
         for(int i = 0; i<t.size(); i++) {
-            ind = t[i];
-            if(ind_max < ind) {
+            ind = i;
+            if(t[ind_max] < t[ind]) {
                 ind_max = ind;
             }
         }
@@ -169,10 +169,10 @@ int indiceMax(vector<int> t) {
 
 void testIndiceMax() {
     CHECK(indiceMax({}) == -1);
-    CHECK(indiceMax({1,2,3}) == 3);
-    CHECK(indiceMax({1,3,2}) == 3);
-    CHECK(indiceMax({1}) == 1);
-    CHECK(indiceMax({2,8,4,4}) == 8);
+    CHECK(indiceMax({1,2,3}) == 2);
+    CHECK(indiceMax({1,3,2}) == 1);
+    CHECK(indiceMax({1}) == 0);
+    CHECK(indiceMax({2,8,4,4}) == 1);
 }
 
 /** Sélection des lignes d'un tableau de données
@@ -211,17 +211,17 @@ int main() {
     testLitTableau();
     testSelectLignes();
     testColonne();
+    testIndiceMax();
     int naiss_tot = 0;
     string choix_pren;
-    int resultat_m, anmax_m = 0;
-    int resultat_f, anmax_f = 0;
+    int resultat_m = 0;
+    int resultat_f = 0;
     vector<vector<string>> t = litTableau("donnees/liste_des_prenoms.txt", 4);
     vector<string> naiss_tab = colonne(t, 3);
     naiss_tot = somme(conversionInt(naiss_tab));
     cout << "Nombre total de naissances : " << naiss_tot << endl;
     cout << "Choisissez un prénom : ";
     cin >> choix_pren;
-    //vector<vector<string>> an_naiss = selectLignes(t, 2, choix_pren);
     vector<int> an_naiss_tab = conversionInt(colonne(selectLignes(t, 2, choix_pren), 1));
     vector<int> an_naiss_tab_m = {};
     vector<int> an_naiss_tab_f = {};
@@ -248,39 +248,22 @@ int main() {
     int nmax_f = indiceMax(pren_tab_nb_f);
     resultat_m = somme(pren_tab_nb_m);
     resultat_f = somme(pren_tab_nb_f);
-    int m = 0;
-    int f = 0;
-    for(int i = 0; i < pren_tab_nb.size(); i++) {
-        if (resultat_f == 0) {
-            m = pren_tab_nb_m[i];
-        } else if(resultat_f != 0 && resultat_m != 0) {
-            m = pren_tab_nb_m[i];
-            f = pren_tab_nb_f[i];
-        } else if(resultat_m == 0) {
-            f = pren_tab_nb_f[i];
-        }
-        if(nmax_m == m) {
-            anmax_m = an_naiss_tab_m[i];
-        } else if(nmax_f == f) {
-            anmax_f = an_naiss_tab_f[i];
-        
-    }
-    }
     if(resultat_m == 0) {
         cout << "Le prénom " << choix_pren << " n'a été donné à aucun garçon entre 2004 et 2023"<<endl;
          cout <<  "Le prénom " << choix_pren << " a été donné " << resultat_f << " filles entre 2004 et 2023" <<endl;
-        cout << "L'année la plus forte est " << anmax_f << " avec " << nmax_f << " enfants" << endl;
+        cout << "L'année la plus forte est " << an_naiss_tab_f[nmax_f] << " avec " << pren_tab_nb_f[nmax_f] << " enfants" << endl;
     }else if(resultat_f == 0) {
         cout << "Le prénom " << choix_pren << " a été donné " << resultat_m << " garçons entre 2004 et 2023"<< endl;
-         cout << "L'année la plus forte est " << anmax_m << " avec " << nmax_m << " enfants" << endl;
+         cout << "L'année la plus forte est " << an_naiss_tab_m[nmax_m] << " avec " << pren_tab_nb_m[nmax_m] << " enfants" << endl;
         cout << "Le prénom " << choix_pren << " n'a été donné à aucune fille entre 2004 et 2023" << endl;
     } else {
     cout << "Le prénom " << choix_pren << " a été donné " << resultat_m << " garçons entre 2004 et 2023"<< endl;
-    cout << "L'année la plus forte est " << anmax_m << " avec " << nmax_m << " enfants"<<endl;
+    cout << "L'année la plus forte est " << an_naiss_tab_m[nmax_m] << " avec " << pren_tab_nb_m[nmax_m] << " enfants"<<endl;
     cout <<  "Le prénom " << choix_pren << " a été donné " << resultat_f << " filles entre 2004 et 2023" <<endl;
-     cout << "L'année la plus forte est " << anmax_f << " avec " << nmax_f << " enfants" << endl;
+     cout << "L'année la plus forte est " << an_naiss_tab_f[nmax_f] << " avec " << pren_tab_nb_f[nmax_f] << " enfants" << endl;
     }
     
     return 0;
 }
+
 
