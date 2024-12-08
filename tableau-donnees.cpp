@@ -46,7 +46,7 @@ int indiceMax(vector<int> t) {
     } else {
         for(int i = 0; i<t.size(); i++) {
             ind = i;
-            if(t[ind_max] < t[ind]) {
+            if(t[ind_max] <= t[ind]) {
                 ind_max = ind;
             }
         }
