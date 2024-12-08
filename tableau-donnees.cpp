@@ -37,16 +37,16 @@ int somme(vector<int> t) {
 
 
 int indiceMax(vector<int> t) {
-     int ind_max = 0;
+    int ind_max = 0;
     int ind = 0;
     if(t.size() == 0) {
         ind_max = -1;
     } else if(t.size() == 1) {
-        ind_max = t[0];
+        ind_max = 0;
     } else {
         for(int i = 0; i<t.size(); i++) {
-            ind = t[i];
-            if(ind_max < ind) {
+            ind = i;
+            if(t[ind_max] < t[ind]) {
                 ind_max = ind;
             }
         }
@@ -80,3 +80,4 @@ vector<vector<string>> selectLignes(vector<vector<string>> t, int j, string vale
     }
     return resultat;
 }
+
