@@ -114,28 +114,26 @@ int main() {
     testCreeTableauAnnee();
     testCreeTableauJours();
     vector<vector<string>> data = litTableau("donnees/statistiques-des-jours-des-mariages.txt", 3);
-    vector<int> t_ann = creeTableauAnnee(data);
+    vector<int> mar_ann = creeTableauAnnee(data);
     vector<int> mar_jou = creeTableauJours(data);
-    int ann_marmax = 0;
+    float mar_tot = somme(mar_ann);
+    int mar_moy = moyenne(mar_ann);
+    int indmax_ann = indiceMax(mar_ann);
+    int indmax_jou = indiceMax(mar_jou);
     string jours_max;
-    for(int i = 0; i<t_ann.size(); i++) {
-        ann_marmax = 2010 + i;
-        if(t_ann[i] == indiceMax(t_ann)) {
-            break;
-    }
-    }
+    
     for(int i = 0; i<mar_jou.size(); i++) {
-        if(mar_jou[i] == indiceMax(mar_jou)) {
+        if(mar_jou[i] == mar_jou[indmax_jou]) {
             jours_max = jours[i];
             break;
         }
     }
-    float nb_jm = indiceMax(mar_jou);
-    float pourcent_mar = (nb_jm/somme(t_ann)) * 100;
-    cout << "Le nombre total de mariage entre 2010 et 2022 est de " << somme(t_ann) << " mariages" << endl;
-    cout << "Le nombre moyen de mariage par an est de " << moyenne(t_ann) << " mariages par an" << endl;
-    cout << "L'année ou l'on a célébrée le plus de mariage est " << ann_marmax << endl;
-    cout << "Le jour de la semaine où l'on a célébré le plus de mariage est le " << jours_max << " avec " << indiceMax(mar_jou) << " mariages" << endl;
-    cout << "Le pourcentage de mariages célébrés le samedi est de " << pourcent_mar << "%";
+    float nb_jm = mar_jou[indmax_jou];
+    float pourcent_mar = (nb_jm/mar_tot) * 100;
+    cout << "Le nombre total de mariages célébrés entre 2010 et 2022 est de " << mar_tot <<endl;
+    cout << "Le nombre de mariages célébrés en moyenne par an est de " << mar_moy << endl;;
+    cout << "L'année où l'on a célébré le plus de mariages est " << 2010 + indmax_ann << " avec " << mar_ann[indmax_ann] << " mariages" <<endl;
+    cout << "Le jour de la semaine où l'on a célébré le plus de mariage est le " << jours_max << " avec " << mar_jou[indmax_jou] <<endl;
+    cout << "Le pourcentage de mariages célébrés le Samedi est de " << pourcent_mar << "%";
+    
 }
-
