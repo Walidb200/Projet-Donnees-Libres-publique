@@ -40,14 +40,19 @@ vector<double> conversionDouble(vector<string> t) {
 }
 
 vector<int> groupByInt(vector<vector<string>> data, vector<string> valeurs, int j1, int j2) {
-    vector<int> resultat(valeurs.size(), 0);
-    for (const auto& ligne : data) {
-        string valeurj1 = ligne[j1];
-        int valeurj2 = stoi(ligne[j2]);
-        int index = chercheIndice(valeurs, j1);
-        if (index != -1) {
-            resultat[index] += j2;
+    vector<int> resultat(valeurs.size());
+    for (int i = 0; i <valeurs.size(); i++) {
+        string valeur_s = valeurs[i];
+        for (int j = 0; j<data.size(); j++) {
+            if(data[j][j1] == valeur_s) {
+                stringstream ss;
+                ss << data[j][j2];
+                int res;
+                ss >> res;
+                resultat[i] += res;
+            
         }
+    }
     }
     return resultat;
 }
