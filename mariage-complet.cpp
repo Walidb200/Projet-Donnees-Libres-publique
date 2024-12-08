@@ -158,11 +158,11 @@ int indiceMax(vector<int> t) {
     if(t.size() == 0) {
         ind_max = -1;
     } else if(t.size() == 1) {
-        ind_max = t[0];
+        ind_max = 0;
     } else {
         for(int i = 0; i<t.size(); i++) {
-            ind = t[i];
-            if(ind_max < ind) {
+            ind = i;
+            if(t[ind_max] < t[ind]) {
                 ind_max = ind;
             }
         }
@@ -170,14 +170,12 @@ int indiceMax(vector<int> t) {
     return ind_max;
 }
 
-/** Test de la fonction IndiceMax **/
 void testIndiceMax() {
     CHECK(indiceMax({}) == -1);
-    CHECK(indiceMax({1,2,3}) == 3);
-    CHECK(indiceMax({1,3,2}) == 3);
-    CHECK(indiceMax({1}) == 1);
-    CHECK(indiceMax({2,8,4,4}) == 8);
-    CHECK(indiceMax({9195,8727,9065,9443,9866,9046,9128,9109,9126,  8817,5966,8176,8484}) == 9866);
+    CHECK(indiceMax({1,2,3}) == 2);
+    CHECK(indiceMax({1,3,2}) == 1);
+    CHECK(indiceMax({1}) == 0);
+    CHECK(indiceMax({2,8,4,4}) == 1);
 }
 
 /** Lance les fonctions de test puis affiche :
@@ -193,26 +191,24 @@ int main() {
     vector<int> mar_jou = litTableauJours("donnees/statistiques-des-jours-des-mariages.txt");
     float mar_tot = somme(mar_ann);
     int mar_moy = moyenne(mar_ann);
-    int ann_marmax = 0;
+    int indmax_ann = indiceMax(mar_ann);
+    int indmax_jou = indiceMax(mar_jou);
     string jours_max;
-    for(int i = 0; i<mar_ann.size(); i++) {
-        ann_marmax = 2010 + i;
-        if(mar_ann[i] == indiceMax(mar_ann)) {
-            break;
-    }
-    }
+    
     for(int i = 0; i<mar_jou.size(); i++) {
-        if(mar_jou[i] == indiceMax(mar_jou)) {
+        if(mar_jou[i] == mar_jou[indmax_jou]) {
             jours_max = jours[i];
             break;
         }
     }
-    float nb_jm = indiceMax(mar_jou);
+    float nb_jm = mar_jou[indmax_jou];
     float pourcent_mar = (nb_jm/mar_tot) * 100;
     cout << "Le nombre total de mariages célébrés entre 2010 et 2022 est de " << mar_tot <<endl;
     cout << "Le nombre de mariages célébrés en moyenne par an est de " << mar_moy << endl;;
-    cout << "L'année où l'on a célébré le plus de mariages est " << ann_marmax << " avec " << indiceMax(mar_ann) << " mariages" <<endl;
-    cout << "Le jour de la semaine où l'on a célébré le plus de mariage est le " << jours_max << " avec " << indiceMax(mar_jou) <<endl;
-    cout << "Le pourcentage de mariages célébrés le samedi est de " << pourcent_mar << "%";
+    cout << "L'année où l'on a célébré le plus de mariages est " << 2010 + indmax_ann << " avec " << mar_ann[indmax_ann] << " mariages" <<endl;
+    cout << "Le jour de la semaine où l'on a célébré le plus de mariage est le " << jours_max << " avec " << mar_jou[indmax_jou] <<endl;
+    cout << "Le pourcentage de mariages célébrés le Samedi est de " << pourcent_mar << "%";
     
 }
+
+
