@@ -25,13 +25,18 @@ vector<string> distinct(vector<vector<string>> data, int j) {
 }
 
 vector<double> conversionDouble(vector<string> t) {
-    stringstream ss(t);
-    double resultat;
-    ss >> resultat;
-    if (ss.fail()) {
-        throw invalid_argument("Conversion échouée: " + t);
+    vector<double> vec_res;//(t.size());
+    for(int i = 0; i<t.size(); i++) {
+        double res = 0;
+        stringstream ss;
+        ss << t[i];
+        ss >> res;
+        vec_res.push_back(res);
     }
-    return resultat;
+    if (vec_res.size() == 0) {
+        throw invalid_argument("Conversion échouée");
+    }
+    return vec_res;
 }
 
 vector<int> groupByInt(vector<vector<string>> data, vector<string> valeurs, int j1, int j2) {
