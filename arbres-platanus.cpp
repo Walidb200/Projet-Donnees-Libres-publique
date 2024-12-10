@@ -10,26 +10,20 @@ using namespace std;
  *  différentes pour ce genre Platanus, parmi les "arbres remarquables"
  **/
 int main() {
-    string fichier_nom = "les_arbres.csv"; 
-    int nb_colonnes = 4; 
-    vector<vector<string>> arbres = litTableauCSV(fichier_nom, nb_colonnes);
+    vector<vector<string>> arbres = litTableauCSV("donnees/arbresremarquablesparis.csv");
+    vector<vector<string>> arbres_platanus = selectLignes(arbres, 11, "Platanus");
+    vector<string> arbres_platanus_nb = colonne(arbres_platanus, 11);
     int compteur_platanus = 0;
-    vector<string> especes_platanus;
-    for (size_t i = 0; i < arbres.size(); ++i) {
-        vector<string>& ligne = arbres[i];
-        if (ligne.size() < nb_colonnes) continue;
-        if (ligne[2] == "Platanus") {
-            compteur_platanus++;
-        }
+    int compt_platanus_esp = 0;
+    vector<string> arbres_platanus_esp = distinct(arbres_platanus, 12);
+    for (int i = 0; i < arbres_platanus_nb.size(); ++i) {
+        compteur_platanus++;
+    }
+    for(int i = 0; i < arbres_platanus_esp.size(); i++) {
+        compt_platanus_esp++;
     }
     cout << "Nombre total d'arbres du genre Platanus : " << compteur_platanus << endl;
-    cout << "Nombre d'espèces différentes de Platanus : " << especes_platanus.size() << endl;
-    vector<string> especes_platanus_vect(especes_platanus.begin(), especes_platanus.end());
-    cout << "Espèces différentes de Platanus :\n";
-    for (size_t i = 0; i < especes_platanus_vect.size(); ++i) {
-        cout << "- " << especes_platanus_vect[i] << endl;
-    }
+    cout << "Nombre d'espèces différentes de Platanus : " << compt_platanus_esp << endl;
 
     return 0;
 }
-
